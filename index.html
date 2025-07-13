@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soccer Laws Quiz - Sign Up & Login</title>
+    <title>Soccer Laws Quiz - Fixed Login Issue</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -79,6 +79,7 @@
             color: var(--primary);
         }
         
+        /* Authentication Styles */
         .auth-container {
             display: flex;
             min-height: 500px;
@@ -200,7 +201,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
         }
         
         .btn i {
@@ -210,7 +210,6 @@
         .btn-primary {
             background: var(--primary);
             color: white;
-            margin-top: 10px;
         }
         
         .btn-primary:hover {
@@ -266,40 +265,6 @@
             color: #777;
         }
         
-        .social-login {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: var(--border-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid #ddd;
-        }
-        
-        .social-btn.google {
-            background: white;
-            color: #db4437;
-        }
-        
-        .social-btn.facebook {
-            background: #1877f2;
-            color: white;
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
         .form-footer {
             text-align: center;
             margin-top: 25px;
@@ -316,31 +281,11 @@
             text-decoration: underline;
         }
         
-        /* Main app content */
+        /* Quiz App Styles */
         .app-content {
             display: none;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .auth-container {
-                flex-direction: column;
-            }
-            
-            .welcome-section, .form-section {
-                width: 100%;
-            }
-            
-            .welcome-section {
-                padding: 30px 20px;
-            }
-            
-            .form-section {
-                padding: 30px 20px;
-            }
-        }
-        
-        /* User profile section */
         .profile-header {
             display: flex;
             justify-content: space-between;
@@ -379,6 +324,235 @@
         
         .logout-btn i {
             margin-right: 5px;
+        }
+        
+        .content-area {
+            display: flex;
+            min-height: 500px;
+        }
+        
+        .law-selection {
+            width: 35%;
+            background: var(--light);
+            padding: 20px;
+            border-right: 2px solid #ddd;
+        }
+        
+        .law-selection h2 {
+            margin-bottom: 20px;
+            color: var(--dark);
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .laws-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .law-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .law-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-left-color: var(--primary);
+        }
+        
+        .law-card.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .law-number {
+            width: 30px;
+            height: 30px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .law-card.active .law-number {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .law-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        /* Quiz Interface */
+        .quiz-interface {
+            width: 65%;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .score-panel {
+            display: flex;
+            justify-content: space-between;
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .score-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .question-container {
+            flex-grow: 1;
+        }
+        
+        .question-header {
+            margin-bottom: 20px;
+        }
+        
+        .question-header h3 {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .option:hover {
+            border-color: var(--secondary);
+            background: #f0f8ff;
+        }
+        
+        .option.selected {
+            border-color: var(--primary);
+            background: rgba(46, 204, 113, 0.1);
+        }
+        
+        .option.correct {
+            border-color: var(--primary);
+            background: rgba(46, 204, 113, 0.2);
+        }
+        
+        .option.incorrect {
+            border-color: var(--accent);
+            background: rgba(231, 76, 60, 0.1);
+        }
+        
+        .option-letter {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .start-quiz-btn {
+            display: block;
+            width: 100%;
+            margin: 30px 0;
+            padding: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .welcome-section, .form-section {
+                width: 100%;
+            }
+            
+            .welcome-section {
+                padding: 30px 20px;
+            }
+            
+            .form-section {
+                padding: 30px 20px;
+            }
+            
+            .content-area {
+                flex-direction: column;
+            }
+            
+            .law-selection, .quiz-interface {
+                width: 100%;
+            }
+            
+            .law-selection {
+                border-right: none;
+                border-bottom: 2px solid #ddd;
+            }
         }
     </style>
 </head>
@@ -432,19 +606,6 @@
                             <div class="form-footer">
                                 <p>Forgot your password? <a href="#" id="forgot-password">Reset it</a></p>
                             </div>
-                            
-                            <div class="divider">
-                                <span>Or continue with</span>
-                            </div>
-                            
-                            <div class="social-login">
-                                <div class="social-btn google">
-                                    <i class="fab fa-google"></i> Google
-                                </div>
-                                <div class="social-btn facebook">
-                                    <i class="fab fa-facebook-f"></i> Facebook
-                                </div>
-                            </div>
                         </form>
                         
                         <!-- Signup Form -->
@@ -484,14 +645,14 @@
             </div>
         </div>
         
-        <!-- Main App Content (hidden by default) -->
+        <!-- Main App Content -->
         <div class="app-content" id="app-content">
             <div class="profile-header">
                 <div class="user-info">
                     <div class="user-avatar" id="user-avatar">JS</div>
                     <div>
                         <div id="user-name">John Smith</div>
-                        <div style="font-size: 0.8rem;">Score: <span id="user-score">850</span> pts</div>
+                        <div style="font-size: 0.8rem;">Score: <span id="user-score">0</span> pts</div>
                     </div>
                 </div>
                 <button class="logout-btn" id="logout-btn">
@@ -499,37 +660,158 @@
                 </button>
             </div>
             
-            <!-- Rest of the quiz app would go here -->
-            <div style="padding: 40px; text-align: center;">
-                <h2>Welcome to the Soccer Laws Quiz!</h2>
-                <p style="margin: 20px 0;">You are now logged in and ready to test your knowledge of FIFA's 17 Laws of the Game.</p>
+            <div class="content-area">
+                <div class="law-selection">
+                    <h2>Laws of the Game</h2>
+                    <div class="laws-container" id="laws-list">
+                        <!-- Laws will be dynamically generated -->
+                    </div>
+                    <button class="btn btn-primary start-quiz-btn" id="start-quiz-btn">
+                        <i class="fas fa-play"></i> Start Quiz
+                    </button>
+                </div>
                 
-                <div style="max-width: 600px; margin: 40px auto; background: var(--light); border-radius: var(--border-radius); padding: 30px;">
-                    <h3><i class="fas fa-medal" style="color: gold;"></i> Your Progress</h3>
-                    <div style="display: flex; justify-content: space-around; margin: 30px 0;">
-                        <div>
-                            <div style="font-size: 2rem; color: var(--primary); font-weight: bold;">7</div>
-                            <div>Laws Mastered</div>
+                <div class="quiz-interface">
+                    <div class="score-panel">
+                        <div class="score-item">
+                            <div class="score-value" id="current-score">0</div>
+                            <div class="score-label">Total Points</div>
                         </div>
-                        <div>
-                            <div style="font-size: 2rem; color: var(--secondary); font-weight: bold;">85%</div>
-                            <div>Accuracy</div>
+                        <div class="score-item">
+                            <div class="score-value" id="questions-done">0</div>
+                            <div class="score-label">Questions Done</div>
                         </div>
-                        <div>
-                            <div style="font-size: 2rem; color: var(--accent); font-weight: bold;">3</div>
-                            <div>Badges Earned</div>
+                        <div class="score-item">
+                            <div class="score-value" id="accuracy">0%</div>
+                            <div class="score-label">Accuracy</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-container">
+                        <div class="question-header">
+                            <h3>Current Law: <span id="current-law">Select a law to start</span></h3>
+                        </div>
+                        
+                        <div class="question-text" id="question-text">
+                            Welcome to the Soccer Laws Quiz! Select a law from the left and click "Start Quiz" to begin testing your knowledge of FIFA's official Laws of the Game.
+                        </div>
+                        
+                        <div class="options-container" id="options-container">
+                            <!-- Options will be dynamically generated -->
+                        </div>
+                        
+                        <div class="quiz-controls">
+                            <button class="btn btn-outline" id="hint-btn">
+                                <i class="fas fa-lightbulb"></i> Show Hint
+                            </button>
+                            <button class="btn btn-primary" id="next-btn">
+                                Next Question <i class="fas fa-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
-                
-                <button class="btn btn-primary" style="width: 200px; margin: 20px auto;">
-                    <i class="fas fa-play"></i> Start Quiz
-                </button>
             </div>
         </div>
     </div>
 
     <script>
+        // Sample questions database
+        const questions = {
+            law1: [
+                {
+                    question: "What is the minimum corner radius for a soccer pitch?",
+                    options: ["1m (1yd)", "3m (3yd)", "5m (5yd)", "No minimum"],
+                    answer: 0,
+                    difficulty: 1,
+                    hint: "The Laws specify a minimum radius for corner arcs."
+                },
+                {
+                    question: "What is the standard length of a soccer pitch?",
+                    options: ["90-120m (100-130yd)", "100-110m (110-120yd)", "80-100m (90-110yd)", "70-80m (80-90yd)"],
+                    answer: 0,
+                    difficulty: 1,
+                    hint: "The length must be greater than the width."
+                }
+            ],
+            law2: [
+                {
+                    question: "What is the standard circumference of a soccer ball?",
+                    options: ["58-60cm (23-24in)", "68-70cm (27-28in)", "63-65cm (25-26in)", "70-72cm (28-29in)"],
+                    answer: 1,
+                    difficulty: 2,
+                    hint: "Think about the size used in professional matches."
+                },
+                {
+                    question: "At what pressure should a soccer ball be inflated?",
+                    options: ["0.6-1.1 atm (9-16 psi)", "0.8-1.0 atm (12-15 psi)", "0.5-0.7 atm (7-10 psi)", "1.0-1.2 atm (15-18 psi)"],
+                    answer: 0,
+                    difficulty: 2,
+                    hint: "This is specified in the Laws of the Game."
+                }
+            ],
+            law3: [
+                {
+                    question: "How many substitutes are allowed in a standard professional match?",
+                    options: ["3", "5", "7", "Unlimited"],
+                    answer: 1,
+                    difficulty: 1,
+                    hint: "This number changed recently due to global events."
+                },
+                {
+                    question: "What is the minimum number of players required to start a match?",
+                    options: ["7", "9", "11", "10"],
+                    answer: 0,
+                    difficulty: 3,
+                    hint: "The number is less than a full team."
+                }
+            ],
+            law4: [
+                {
+                    question: "What item of equipment is mandatory for all players?",
+                    options: ["Shin guards", "Gloves", "Headband", "Arm sleeves"],
+                    answer: 0,
+                    difficulty: 1,
+                    hint: "This protects players from injury."
+                },
+                {
+                    question: "What color must the goalkeeper's jersey be?",
+                    options: ["Different from both teams and referee", "Same as team colors", "Always green", "No specific requirement"],
+                    answer: 0,
+                    difficulty: 2,
+                    hint: "It must be distinguishable from others."
+                }
+            ],
+            law5: [
+                {
+                    question: "Who has the final decision on matters of fact?",
+                    options: ["Referee", "Assistant Referee", "Fourth Official", "VAR"],
+                    answer: 0,
+                    difficulty: 2,
+                    hint: "This person is the ultimate authority on the field."
+                },
+                {
+                    question: "When can a referee change a decision?",
+                    options: ["Only before play restarts", "At any time during the match", "Only at halftime", "Only with VAR intervention"],
+                    answer: 0,
+                    difficulty: 3,
+                    hint: "After restart, the decision cannot be changed."
+                }
+            ]
+        };
+
+        // App State
+        const state = {
+            currentLaw: null,
+            currentQuestion: 0,
+            score: 0,
+            totalQuestions: 0,
+            correctAnswers: 0,
+            selectedOption: null,
+            answered: false,
+            lawsCompleted: {},
+            quizStarted: false
+        };
+
         // DOM Elements
         const authSection = document.getElementById('auth-section');
         const appContent = document.getElementById('app-content');
@@ -542,84 +824,116 @@
         const userAvatar = document.getElementById('user-avatar');
         const userScore = document.getElementById('user-score');
         const forgotPassword = document.getElementById('forgot-password');
-        
-        // Switch between tabs
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove active class from all tabs
-                tabs.forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tab
-                tab.classList.add('active');
-                
-                // Show the corresponding form
-                const tabName = tab.getAttribute('data-tab');
-                authForms.forEach(form => {
-                    form.classList.remove('active');
-                    if (form.id === `${tabName}-form`) {
-                        form.classList.add('active');
-                    }
+        const lawsList = document.getElementById('laws-list');
+        const currentLawEl = document.getElementById('current-law');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const hintBtn = document.getElementById('hint-btn');
+        const currentScoreEl = document.getElementById('current-score');
+        const questionsDoneEl = document.getElementById('questions-done');
+        const accuracyEl = document.getElementById('accuracy');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+
+        // Initialize the app
+        function init() {
+            setupAuthEventListeners();
+            setupQuizEventListeners();
+        }
+
+        // Set up authentication event listeners
+        function setupAuthEventListeners() {
+            // Switch between tabs
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show the corresponding form
+                    const tabName = tab.getAttribute('data-tab');
+                    authForms.forEach(form => {
+                        form.classList.remove('active');
+                        if (form.id === `${tabName}-form`) {
+                            form.classList.add('active');
+                        }
+                    });
                 });
             });
-        });
-        
-        // Handle login form submission
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
             
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
+            // Handle login form submission
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                
+                // Basic validation
+                if (!email || !password) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Simulate login
+                simulateLogin(email);
+            });
             
-            // Basic validation
-            if (!email || !password) {
-                alert('Please fill in all fields');
-                return;
-            }
+            // Handle signup form submission
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                const confirmPassword = document.getElementById('signup-confirm').value;
+                
+                // Basic validation
+                if (!name || !email || !password || !confirmPassword) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password should be at least 6 characters');
+                    return;
+                }
+                
+                // Simulate signup and login
+                simulateSignup(name, email);
+            });
             
-            // Simulate login
-            simulateLogin(email);
-        });
-        
-        // Handle signup form submission
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            // Handle logout
+            logoutBtn.addEventListener('click', () => {
+                authSection.style.display = 'block';
+                appContent.style.display = 'none';
+                resetQuizState();
+            });
             
-            const name = document.getElementById('signup-name').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('signup-confirm').value;
+            // Forgot password
+            forgotPassword.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert('Password reset instructions have been sent to your email.');
+            });
+        }
+
+        // Set up quiz event listeners
+        function setupQuizEventListeners() {
+            // Start quiz button
+            startQuizBtn.addEventListener('click', startSelectedQuiz);
             
-            // Basic validation
-            if (!name || !email || !password || !confirmPassword) {
-                alert('Please fill in all fields');
-                return;
-            }
+            // Next question button
+            nextBtn.addEventListener('click', showNextQuestion);
             
-            if (password !== confirmPassword) {
-                alert('Passwords do not match');
-                return;
-            }
-            
-            if (password.length < 6) {
-                alert('Password should be at least 6 characters');
-                return;
-            }
-            
-            // Simulate signup and login
-            simulateSignup(name, email);
-        });
-        
-        // Handle logout
-        logoutBtn.addEventListener('click', () => {
-            authSection.style.display = 'block';
-            appContent.style.display = 'none';
-        });
-        
-        // Forgot password
-        forgotPassword.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert('Password reset instructions have been sent to your email.');
-        });
-        
+            // Hint button
+            hintBtn.addEventListener('click', showHint);
+        }
+
         // Simulate login process
         function simulateLogin(email) {
             // Show loading state
@@ -635,6 +949,9 @@
                 userName.textContent = firstName + ' Smith';
                 userAvatar.textContent = firstName.charAt(0) + 'S';
                 userScore.textContent = Math.floor(Math.random() * 500) + 500;
+                
+                // Initialize the quiz UI
+                initializeQuizUI();
                 
                 // Show app content
                 authSection.style.display = 'none';
@@ -663,6 +980,9 @@
                 userAvatar.textContent = (firstName.charAt(0) + (lastName.charAt(0))).toUpperCase();
                 userScore.textContent = '0';
                 
+                // Initialize the quiz UI
+                initializeQuizUI();
+                
                 // Show app content
                 authSection.style.display = 'none';
                 appContent.style.display = 'block';
@@ -679,13 +999,244 @@
             }, 2000);
         }
         
-        // Social login handlers
-        document.querySelectorAll('.social-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const provider = btn.classList.contains('google') ? 'Google' : 'Facebook';
-                alert(`Logging in with ${provider}...`);
+        // Initialize the quiz UI after login
+        function initializeQuizUI() {
+            renderLawSelection();
+            updateStats();
+            
+            // Reset the quiz state
+            state.currentLaw = null;
+            state.currentQuestion = 0;
+            state.score = 0;
+            state.totalQuestions = 0;
+            state.correctAnswers = 0;
+            state.selectedOption = null;
+            state.answered = false;
+            state.lawsCompleted = {};
+            state.quizStarted = false;
+            
+            // Show welcome message
+            questionText.textContent = "Welcome to the Soccer Laws Quiz! Select a law from the left and click \"Start Quiz\" to begin testing your knowledge of FIFA's official Laws of the Game.";
+            optionsContainer.innerHTML = '';
+            currentLawEl.textContent = "Select a law to start";
+        }
+        
+        // Render law selection menu
+        function renderLawSelection() {
+            const lawTitles = [
+                "Law 1: The Field of Play",
+                "Law 2: The Ball",
+                "Law 3: The Players",
+                "Law 4: The Players' Equipment",
+                "Law 5: The Referee",
+                "Law 6: Other Match Officials",
+                "Law 7: The Duration of the Match",
+                "Law 8: The Start and Restart of Play",
+                "Law 9: The Ball In and Out of Play",
+                "Law 10: Determining the Outcome of a Match",
+                "Law 11: Offside",
+                "Law 12: Fouls and Misconduct",
+                "Law 13: Free Kicks",
+                "Law 14: The Penalty Kick",
+                "Law 15: The Throw-in",
+                "Law 16: The Goal Kick",
+                "Law 17: The Corner Kick"
+            ];
+            
+            lawsList.innerHTML = '';
+            
+            lawTitles.forEach((title, index) => {
+                const lawNumber = index + 1;
+                const card = document.createElement('div');
+                card.className = 'law-card';
+                if (state.currentLaw === `law${lawNumber}`) {
+                    card.classList.add('active');
+                }
+                card.innerHTML = `
+                    <div class="law-number">${lawNumber}</div>
+                    <div class="law-title">${title}</div>
+                `;
+                card.addEventListener('click', () => selectLaw(`law${lawNumber}`));
+                lawsList.appendChild(card);
             });
-        });
+        }
+        
+        // Select a law
+        function selectLaw(law) {
+            state.currentLaw = law;
+            renderLawSelection();
+            currentLawEl.textContent = `Law ${law.replace('law', '')} - ${lawTitles[law.replace('law', '')-1].split(': ')[1]}`;
+        }
+        
+        // Start the selected quiz
+        function startSelectedQuiz() {
+            if (!state.currentLaw) {
+                alert("Please select a law first!");
+                return;
+            }
+            
+            state.quizStarted = true;
+            state.currentQuestion = 0;
+            state.selectedOption = null;
+            state.answered = false;
+            
+            showQuestion();
+        }
+        
+        // Display current question
+        function showQuestion() {
+            const questionsForLaw = questions[state.currentLaw];
+            if (!questionsForLaw || state.currentQuestion >= questionsForLaw.length) {
+                endLawQuiz();
+                return;
+            }
+            
+            const q = questionsForLaw[state.currentQuestion];
+            questionText.textContent = q.question;
+            
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+            
+            // Create new options
+            const letters = ['A', 'B', 'C', 'D'];
+            q.options.forEach((option, index) => {
+                const optionEl = document.createElement('div');
+                optionEl.className = 'option';
+                if (state.selectedOption === index) {
+                    optionEl.classList.add('selected');
+                }
+                optionEl.innerHTML = `
+                    <div class="option-letter">${letters[index]}</div>
+                    <div class="option-text">${option}</div>
+                `;
+                optionEl.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionEl);
+            });
+            
+            // Update button states
+            nextBtn.disabled = !state.answered;
+            nextBtn.textContent = state.answered ? 'Next Question' : 'Skip Question';
+        }
+        
+        // Handle option selection
+        function selectOption(index) {
+            if (state.answered) return;
+            
+            state.selectedOption = index;
+            state.answered = true;
+            
+            const questionsForLaw = questions[state.currentLaw];
+            const q = questionsForLaw[state.currentQuestion];
+            const optionElements = optionsContainer.querySelectorAll('.option');
+            
+            // Add visual feedback
+            optionElements.forEach((el, i) => {
+                if (i === index) {
+                    el.classList.add('selected');
+                    if (i === q.answer) {
+                        el.classList.add('correct');
+                        // Update score
+                        state.score += q.difficulty;
+                        state.correctAnswers++;
+                    } else {
+                        el.classList.add('incorrect');
+                    }
+                } else if (i === q.answer) {
+                    el.classList.add('correct');
+                }
+            });
+            
+            // Update stats
+            state.totalQuestions++;
+            updateStats();
+            
+            // Enable next button
+            nextBtn.disabled = false;
+        }
+        
+        // Show hint for current question
+        function showHint() {
+            if (!state.quizStarted || state.answered) return;
+            
+            const questionsForLaw = questions[state.currentLaw];
+            const q = questionsForLaw[state.currentQuestion];
+            alert(`Hint: ${q.hint}`);
+        }
+        
+        // Show next question
+        function showNextQuestion() {
+            if (!state.quizStarted) return;
+            
+            state.currentQuestion++;
+            state.selectedOption = null;
+            state.answered = false;
+            showQuestion();
+        }
+        
+        // End of law quiz
+        function endLawQuiz() {
+            // Mark law as completed
+            state.lawsCompleted[state.currentLaw] = true;
+            
+            // Show results
+            alert(`You've completed Law ${state.currentLaw.replace('law', '')}! Your score: ${state.score} points`);
+            
+            // Reset for next law
+            state.quizStarted = false;
+            state.currentLaw = null;
+            renderLawSelection();
+            currentLawEl.textContent = "Select a law to start";
+            questionText.textContent = "Great job! Select another law to continue, or start the same law again to improve your score.";
+            optionsContainer.innerHTML = '';
+        }
+        
+        // Reset quiz state
+        function resetQuizState() {
+            state.currentLaw = null;
+            state.currentQuestion = 0;
+            state.score = 0;
+            state.totalQuestions = 0;
+            state.correctAnswers = 0;
+            state.selectedOption = null;
+            state.answered = false;
+            state.lawsCompleted = {};
+            state.quizStarted = false;
+        }
+        
+        // Update statistics display
+        function updateStats() {
+            currentScoreEl.textContent = state.score;
+            questionsDoneEl.textContent = state.totalQuestions;
+            
+            const accuracy = state.totalQuestions > 0 ? 
+                Math.round((state.correctAnswers / state.totalQuestions) * 100) : 0;
+            accuracyEl.textContent = `${accuracy}%`;
+            userScore.textContent = state.score;
+        }
+        
+        // Law titles for display
+        const lawTitles = [
+            "The Field of Play",
+            "The Ball",
+            "The Players",
+            "The Players' Equipment",
+            "The Referee",
+            "Other Match Officials",
+            "The Duration of the Match",
+            "The Start and Restart of Play",
+            "The Ball In and Out of Play",
+            "Determining the Outcome of a Match",
+            "Offside",
+            "Fouls and Misconduct",
+            "Free Kicks",
+            "The Penalty Kick",
+            "The Throw-in",
+            "The Goal Kick",
+            "The Corner Kick"
+        ];
+        
+        // Initialize when page loads
+        window.onload = init;
     </script>
 </body>
 </html>
